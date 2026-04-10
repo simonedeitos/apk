@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vlc="clr-namespace:LibVLCSharp.MAUI;assembly=LibVLCSharp.MAUI"
+             x:Class="BeatItaliano.MainPage"
+             NavigationBarIsVisible="False"
+             BackgroundColor="Black"
+             Title="BeatItaliano">
+
+    <Grid>
+        <!-- Video Player Fullscreen -->
+        <vlc:VideoView x:Name="VideoView"
+                       HorizontalOptions="Fill"
+                       VerticalOptions="Fill" />
+
+        <!-- Overlay di caricamento -->
+        <VerticalStackLayout x:Name="LoadingOverlay"
+                             IsVisible="True"
+                             BackgroundColor="#CC000000"
+                             VerticalOptions="Center"
+                             HorizontalOptions="Center"
+                             Spacing="15"
+                             Padding="30">
+
+            <ActivityIndicator IsRunning="True"
+                               Color="#FF4444"
+                               HeightRequest="50"
+                               WidthRequest="50" />
+
+            <Label Text="🎵 BeatItaliano"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   HorizontalTextAlignment="Center" />
+
+            <Label Text="Connessione allo streaming..."
+                   FontSize="14"
+                   TextColor="#AAAAAA"
+                   HorizontalTextAlignment="Center" />
+        </VerticalStackLayout>
+
+        <!-- Messaggio di errore (nascosto di default) -->
+        <VerticalStackLayout x:Name="ErrorOverlay"
+                             IsVisible="False"
+                             BackgroundColor="#CC000000"
+                             VerticalOptions="Center"
+                             HorizontalOptions="Center"
+                             Spacing="15"
+                             Padding="30">
+
+            <Label Text="⚠️ Errore di Connessione"
+                   FontSize="22"
+                   FontAttributes="Bold"
+                   TextColor="#FF4444"
+                   HorizontalTextAlignment="Center" />
+
+            <Label x:Name="ErrorMessage"
+                   FontSize="14"
+                   TextColor="#AAAAAA"
+                   HorizontalTextAlignment="Center" />
+
+            <Button Text="🔄 Riprova"
+                    BackgroundColor="#FF4444"
+                    TextColor="White"
+                    Clicked="OnRetryClicked"
+                    CornerRadius="8"
+                    Padding="20,10" />
+        </VerticalStackLayout>
+    </Grid>
+
+</ContentPage>
