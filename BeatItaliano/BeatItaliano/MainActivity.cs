@@ -3,6 +3,7 @@ using Android.Content.PM;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
+using LibVLCSharp.Platforms.Android;
 using LibVLCSharp.Shared;
 
 namespace BeatItaliano;
@@ -33,7 +34,7 @@ public class MainActivity : Activity
 
     private LibVLC? _libVLC;
     private MediaPlayer? _mediaPlayer;
-    private SurfaceView? _videoSurface;
+    private VideoView? _videoView;
 
     private LinearLayout? _loadingOverlay;
     private LinearLayout? _errorOverlay;
@@ -64,7 +65,7 @@ public class MainActivity : Activity
 
         SetContentView(Resource.Layout.activity_main);
 
-        _videoSurface = FindViewById<SurfaceView>(Resource.Id.videoSurface);
+        _videoView = FindViewById<VideoView>(Resource.Id.videoView);
         _loadingOverlay = FindViewById<LinearLayout>(Resource.Id.loadingOverlay);
         _errorOverlay = FindViewById<LinearLayout>(Resource.Id.errorOverlay);
         _errorMessage = FindViewById<TextView>(Resource.Id.errorMessage);
@@ -110,13 +111,9 @@ public class MainActivity : Activity
             _mediaPlayer.EncounteredError += OnMediaError;
             _mediaPlayer.EndReached += OnMediaEndReached;
 
-            if (_videoSurface?.Holder?.Surface != null)
+            if (_videoView != null)
             {
-                _mediaPlayer.AndroidSurface = _videoSurface.Holder.Surface;
-            }
-            else if (_videoSurface?.Holder != null)
-            {
-                _videoSurface.Holder.AddCallback(new SurfaceCallback(_mediaPlayer));
+                _videoView.MediaPlayer = _mediaPlayer;
             }
 
             using var media = new Media(_libVLC, new Uri(StreamUrl));
@@ -136,6 +133,10 @@ public class MainActivity : Activity
             _mediaPlayer.EncounteredError -= OnMediaError;
             _mediaPlayer.EndReached -= OnMediaEndReached;
             _mediaPlayer.Stop();
+            if (_videoView != null)
+            {
+                _videoView.MediaPlayer = null;
+            }
             _mediaPlayer.Dispose();
             _mediaPlayer = null;
         }
@@ -190,29 +191,5 @@ public class MainActivity : Activity
     {
         base.OnDestroy();
         StopStreaming();
-    }
-
-    private sealed class SurfaceCallback : Java.Lang.Object, ISurfaceHolderCallback
-    {
-        private readonly MediaPlayer _player;
-
-        public SurfaceCallback(MediaPlayer player)
-        {
-            _player = player;
-        }
-
-        public void SurfaceCreated(ISurfaceHolder holder)
-        {
-            _player.AndroidSurface = holder.Surface;
-        }
-
-        public void SurfaceChanged(ISurfaceHolder holder, Android.Graphics.Format format, int width, int height)
-        {
-        }
-
-        public void SurfaceDestroyed(ISurfaceHolder holder)
-        {
-            _player.AndroidSurface = null;
-        }
     }
 }
