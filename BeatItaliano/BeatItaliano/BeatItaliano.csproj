@@ -11,11 +11,12 @@
     <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
     <AndroidPackageFormat>apk</AndroidPackageFormat>
     <SupportedOSPlatformVersion>24.0</SupportedOSPlatformVersion>
+    <AndroidTargetSdkVersion>35</AndroidTargetSdkVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="LibVLCSharp" Version="3.9.1" />
-    <PackageReference Include="VideoLAN.LibVLC.Android" Version="3.6.0" />
+    <PackageReference Include="VideoLAN.LibVLC.Android" Version="3.6.5" />
   </ItemGroup>
 
 </Project>
