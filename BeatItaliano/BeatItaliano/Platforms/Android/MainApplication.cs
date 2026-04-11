@@ -1,4 +1,5 @@
-﻿using Android.App;
+﻿// Aggiornato 2026-04-11
+using Android.App;
 using Android.Runtime;
 
 namespace BeatItaliano
