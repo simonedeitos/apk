@@ -1,4 +1,5 @@
-﻿using LibVLCSharp.MAUI;
+﻿// Aggiornato 2026-04-11
+using LibVLCSharp.MAUI;
 using Microsoft.Extensions.Logging;
 
 namespace BeatItaliano;

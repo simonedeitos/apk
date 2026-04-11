@@ -1,4 +1,5 @@
-﻿using LibVLCSharp.Shared;
+﻿// Aggiornato 2026-04-11
+using LibVLCSharp.Shared;
 
 namespace BeatItaliano;
 
